@@ -127,6 +127,13 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->auth_key;
     }
 
+
+    public function getDetails(){
+        $userDetails =  UserDetails::findOne($this->details_id);
+        $userDetails->email = $this->email;
+        return $userDetails;
+    }
+
     /**
      * @inheritdoc
      */

@@ -19,6 +19,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup', 'options'=>['enctype'=>'multipart/form-data']]); ?>
 
+                <?= $form->field($model, 'first_name') ?>
+
+                <?= $form->field($model, 'last_name') ?>
+
                 <?= $form->field($model, 'email')->input('email') ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>

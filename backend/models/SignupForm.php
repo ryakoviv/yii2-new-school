@@ -2,8 +2,6 @@
 namespace backend\models;
 
 use yii\base\Model;
-use backend\models\User;
-use yii\web\UploadedFile;
 
 /**
  * Signup form
@@ -14,6 +12,8 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $password_repeat;
+    public $first_name;
+    public $last_name;
 
     /**
      * @inheritdoc
@@ -30,6 +30,10 @@ class SignupForm extends Model
             ['password', 'string', 'min' => 6],
             ['password_repeat', 'required'],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
+
+            [['first_name', 'last_name'], 'trim'],
+            [['first_name', 'last_name'], 'required'],
+            [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 255],
         ];
     }
 
@@ -44,12 +48,18 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-
+        $details = New UserDetails();
+        $details->first_name = $this->first_name;
+        $details->last_name = $this->last_name;
+        if (!$details->save()){
+            return null;
+        }
         $user = new User();
         $user->username = $this->email;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
+        $user->details_id = $details->id;
         return $user->save() ? $user : null;
     }
 
