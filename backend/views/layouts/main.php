@@ -39,6 +39,7 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        $menuItems[] = ['label' => 'Schools', 'url' => ['/schools/schools/index']];
         $menuItems[] = ['label' => 'My account', 'url' => ['/account/account/index']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
@@ -59,6 +60,7 @@ AppAsset::register($this);
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            'homeLink'=>false
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>

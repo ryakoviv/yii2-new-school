@@ -1,5 +1,5 @@
 <?php
-namespace backend\modules\account;
+namespace backend\modules\schools;
 
 class Module extends \yii\base\Module
 {

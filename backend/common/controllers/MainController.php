@@ -5,12 +5,17 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use Yii;
+use yii\web\Response;
 
 /**
  * Site controller
+ *
+ * @property \yii\db\ActiveRecord $activeRecord
  */
 class MainController extends Controller
 {
+    protected $activeRecord = '';
+
     /**
      * @inheritdoc
      */
@@ -60,5 +65,11 @@ class MainController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    public function actionDelete($id){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = new $this->activeRecord;
+        return ['status' => $model::deleteAll(['id'=>$id])];
     }
 }
